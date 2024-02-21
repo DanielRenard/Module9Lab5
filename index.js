@@ -10,16 +10,15 @@ app.get("/", (req, res) => {
 });
 
 io.on("connection", (socket) => {
-  socket.on('chat message', (msg) => {
-    console.log('message: ' + msg);
-  //send to all possible clients - emit
-  io.emit("connection", "a user connected");
-  io.emit("chat message", (msg));
-  })
-  //server
-  console.log('SERVER - a user connected')
-  socket.on('disconnect', () => {
-    console.log('user disconnected');
+  console.log("SERVER - a user connected"); //server
+  io.emit("chat message", "a user connected");
+  socket.on("chat message", (msg) => {
+    console.log("message: " + msg);
+    io.emit("chat message", msg);
+  });
+  socket.on("disconnect", () => {
+    console.log("SERVER - user disconnected");
+    io.emit("chat message", "some user disconnected");
   });
 });
 
