@@ -67,10 +67,13 @@
     <script src="/socket.io/socket.io.js"></script>
     <script>
       let socket = io();
-      socket.on("connection", (msg) => console.log(msg));
+
       let messages = document.getElementById("messages");
       let form = document.getElementById("form");
       let input = document.getElementById("input");
+      // const username = prompt("Please enter a username: ", "");
+
+      socket.on("connection", (msg) => console.log(msg));
 
       form.addEventListener("submit", function (e) {
         e.preventDefault();
@@ -79,6 +82,7 @@
           input.value = "";
         }
       });
+
       socket.on("chat message", function (msg) {
         let item = document.createElement("li");
         item.textContent = msg;
